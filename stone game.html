@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Easy</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: sans-serif;
+            background: #f1f1f1;
+        }
+
+        h1 {
+            background: #081b31;
+            color: #fff;
+            padding: 15px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .choice img:hover{
+            border: 5px solid #000;
+        }
+
+        .choice img {
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .score-board {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+
+        #msg {
+            margin-top: 2rem;
+            font-size: 1.3rem;
+            background: #081b31;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Rock Paper Scissors</h1>
+
+    <div class="choices">
+        <div class="choice" id="rock"><img src="a1.png"></div>
+        <div class="choice" id="paper"><img src="a2.png"></div>
+        <div class="choice" id="scissors"><img src="a3.png"></div>
+    </div>
+
+    <div class="score-board">
+        <p>You: <span id="user-score">0</span> | Computer: <span id="comp-score">0</span></p>
+    </div>
+
+    <p id="msg">Play your move</p>
+
+    <script>
+        let userScore = 0; // User score
+        let compScore = 0; // Computer score
+
+        // HTML na element select karo
+        let choices = document.querySelectorAll(".choice"); // rock, paper, scissors
+        let msg = document.querySelector("#msg"); // message line
+        let userScoreShow = document.querySelector("#user-score"); // user score text
+        let compScoreShow = document.querySelector("#comp-score"); // comp score text
+
+        // Computer random choice camade
+        function getCompChoice() {
+            let options = ["rock", "paper", "scissors"];
+            let rand = Math.floor(Math.random() * 3); // 0,1,2
+            return options[rand];
+        }
+
+        // Winner decide karo
+        function playGame(userChoice) {
+            let compChoice = getCompChoice();
+
+            // by default user jeete che
+            let userWin = true;
+
+            if (userChoice === "rock" && compChoice === "paper") {
+                userWin = false;
+            } else if (userChoice === "paper" && compChoice === "scissors") {
+                userWin = false;
+            } else if (userChoice === "scissors" && compChoice === "rock") {
+                userWin = false;
+            }
+
+            // result show karo
+            if (userWin) {
+                userScore++;
+                userScoreShow.innerText = userScore;
+                msg.innerText = `You WIN! and (COMPUTER lose)`;
+                msg.style.backgroundColor = "green";
+            } else {
+                compScore++;
+                compScoreShow.innerText = compScore;
+                msg.innerText = `You LOSE! and (COMPUTER WIN)`;
+                msg.style.backgroundColor = "red";
+            }
+        }
+
+        // User click kare tyare
+        choices.forEach((choice) => {
+            choice.addEventListener("click", () => {
+                let userChoice = choice.id; // rock/paper/scissors
+                playGame(userChoice);
+            });
+        });
+
+    </script>
+</body>
+
+</html>
